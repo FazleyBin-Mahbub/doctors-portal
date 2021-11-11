@@ -9,8 +9,9 @@ const Login = () => {
     const value = e.target.value;
     const newLoginData = { ...loginData };
     newLoginData[field] = value;
+
     setLoginData(newLoginData);
-    console.log(field, value);
+    console.log(field, value, newLoginData);
   };
   const handleLoginSubmit = (e) => {
     alert("Login");
@@ -19,7 +20,7 @@ const Login = () => {
   return (
     <Container>
       <Grid sx={{ mt: 2 }} container spacing={2}>
-        <Grid sx={{ boxShadow: 1 }} item xs={12} md={6}>
+        <Grid sx={{ mt: 8 }} item xs={12} md={6}>
           <Typography variant="h4" gutterBottom>
             Login
           </Typography>
