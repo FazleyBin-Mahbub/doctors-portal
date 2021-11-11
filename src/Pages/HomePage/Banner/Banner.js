@@ -28,7 +28,7 @@ const Banner = () => {
             </Typography>
             <Typography
               variant="body1"
-              sx={{ color: "gray", fontSize: "14", my: 5 }}
+              sx={{ color: "gray", fontSize: "14", my: 5,fontWeight:800, fontFamily: "Montserrat" }}
             >
               lorem ipsum dolor sit lorem ipsum dolor sitlorem ipsum dolor sit
               lorem ipsum dolor sit lorem ipsum dolor sit lorem ipsum dolor sit

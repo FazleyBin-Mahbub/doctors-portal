@@ -21,6 +21,7 @@ const Service = ({ service }) => {
               width: "auto",
               height: "80px",
               margin: "0 auto",
+              fontFamily: "Montserrat",
             }}
             image={img}
             alt="Paella dish"
