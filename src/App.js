@@ -1,31 +1,43 @@
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import Appointment from "./Pages/AppointmentPage/Appointment/Appointment";
 import Home from "./Pages/HomePage/Home/Home";
 import "@fontsource/montserrat";
 import Login from "./Pages/LoginPage/Login/Login";
 import Registration from "./Pages/LoginPage/Registration/Registration";
+import AuthProvider from "./contexts/AuthProvider/AuthProvider";
+import PrivateRoute from "./Pages/LoginPage/PrivateRoute/PrivateRoute";
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Router>
+      <AuthProvider>
+        <Router>
+          <Switch>
             {/* default routes */}
-            <Route path="/" element={<Home />} />
+            <Route exact path="/">
+              <Home />
+            </Route>
             {/* default routes endpoint */}
 
             {/* home Routes */}
-            <Route path="/home" element={<Home />} />
+            <Route exact path="/home">
+              <Home />
+            </Route>
             {/* HOME routes endpoint */}
 
             {/* appointments routes here */}
-            <Route path="/appointment" element={<Appointment />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/registration" element={<Registration />} />
-          </Router>
-        </Routes>
-      </Router>
+            <PrivateRoute path="/appointment">
+              <Appointment />
+            </PrivateRoute>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/registration">
+              <Registration />
+            </Route>
+          </Switch>
+        </Router>
+      </AuthProvider>
     </div>
   );
 }
