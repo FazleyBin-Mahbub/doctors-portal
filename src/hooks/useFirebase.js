@@ -20,7 +20,7 @@ const useFirebase = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const detination = location?.state?.from || "/";
-        history.replace(detination);
+        history.push(detination);
         setError("");
       })
       .catch((err) => {

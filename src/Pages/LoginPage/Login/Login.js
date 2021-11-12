@@ -25,7 +25,7 @@ const Login = () => {
     setLoginData(newLoginData);
   };
   const handleLoginSubmit = (e) => {
-    signinUser(loginData.email, loginData.password, history, location);
+    signinUser(loginData.email, loginData.password, location, history);
     e.preventDefault();
   };
   return (
