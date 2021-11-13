@@ -30,10 +30,26 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
   const handleBookSubmit = (e) => {
     e.preventDefault();
     // collect data
+    const appointment = {
+      ...bookingInfo,
+      time,
+      serviceName: name,
+      date: date.toDateString(),
+    };
 
     // send data to server
+    fetch("http://localhost:5000/appointments", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
     closeModal();
-    alert("Booking Successful");
   };
 
   const handleOnBlur = (e) => {
@@ -41,6 +57,7 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
     const value = e.target.value;
     const newInfo = { ...bookingInfo };
     newInfo[field] = value;
+    console.log(newInfo);
     setBookingInfo(newInfo);
     e.preventDefault();
   };
@@ -91,7 +108,7 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
             size="small"
             onBlur={handleOnBlur}
             type="email"
-            required
+            placeholder="user@gmail.com"
           />
           <TextField
             sx={{ width: "90%", m: 1 }}
