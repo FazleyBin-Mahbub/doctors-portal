@@ -30,7 +30,7 @@ const Login = () => {
   };
   const handleGoogleSignin = () => {
     googleSignin(location, history);
-  }
+  };
   return (
     <Container>
       <Grid sx={{ mt: 2 }} container spacing={2}>
@@ -48,7 +48,7 @@ const Login = () => {
                 variant="standard"
                 required
                 name="email"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
               />
 
               <TextField
@@ -60,18 +60,18 @@ const Login = () => {
                 autoComplete="current-password"
                 required
                 name="password"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
               />
-              <NavLink style={{ textDecoration: "none" }} to="/registration">
-                <Button variant="text">New user? Please Register</Button>
-              </NavLink>
               <Button
-                sx={{ width: "75%", mt: 4 }}
+                sx={{ width: "75%", mt: 2 }}
                 variant="contained"
                 type="submit"
               >
                 Sign in
               </Button>
+              <NavLink style={{ textDecoration: "none" }} to="/registration">
+                <Button variant="text">New user? Please Register</Button>
+              </NavLink>
             </form>
           )}
           {loading && <CircularProgress color="secondary" />}
@@ -83,7 +83,9 @@ const Login = () => {
           {error && <Alert severity="error">{error}</Alert>}
 
           <p>-------------------------</p>
-          <Button onClick={handleGoogleSignin} variant="contained">Google</Button>
+          <Button onClick={handleGoogleSignin} variant="contained">
+            Google
+          </Button>
         </Grid>
         <Grid item xs={12} md={6}>
           <img width="100%" src={login} alt="" />

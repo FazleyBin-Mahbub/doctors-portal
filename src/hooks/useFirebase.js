@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 initializeAuthentication();
 const useFirebase = () => {
@@ -17,13 +18,22 @@ const useFirebase = () => {
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
   //  login user with email and password
-  const signinUser = (email, password, location, history) => {
+  const signinUser = (email, password, name, location, history) => {
     setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const detination = location?.state?.from || "/";
         history.push(detination);
         setError("");
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          // photoURL: user.photoURL,
+        })
+          .then(() => {})
+
+          .catch((error) => {
+            setError(error.message);
+          });
       })
       .catch((err) => {
         setError(err.message);
@@ -48,12 +58,22 @@ const useFirebase = () => {
       .finally(() => setLoading(false));
   };
   // register user
-  const registerUser = (email, password) => {
+  const registerUser = (name, email, password, history) => {
     setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const user = result.user;
         setError("");
+
+        const newUser = { email, displayName: name };
+        setUser(newUser);
+
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {})
+          .catch((error) => {});
+        history.push("/");
       })
       .catch((err) => {
         setError(err.message);

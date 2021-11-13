@@ -9,25 +9,27 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 
 const Registration = () => {
   const [loginData, setLoginData] = useState({});
   const { user, registerUser, loading, error } = useAuth();
-  const handleOnChange = (e) => {
+  const history = useHistory();
+  const handleOnBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
     const newLoginData = { ...loginData };
     newLoginData[field] = value;
     setLoginData(newLoginData);
+    console.log(newLoginData);
   };
   const handleLoginSubmit = (e) => {
     if (loginData.password !== loginData.password2) {
       alert("Password did not match");
     }
-    registerUser(loginData.email, loginData.password);
+    registerUser(loginData.email, loginData.password, loginData.name, history);
     e.preventDefault();
   };
   return (
@@ -42,12 +44,23 @@ const Registration = () => {
               <TextField
                 sx={{ width: "75%", m: 1 }}
                 id="standard-basic"
+                label="Username"
+                variant="standard"
+                required
+                name="username"
+                type="text"
+                onBlur={handleOnBlur}
+              />
+
+              <TextField
+                sx={{ width: "75%", m: 1 }}
+                id="standard-basic"
                 label="Email"
                 variant="standard"
                 required
                 name="email"
                 type="email"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               />
 
               <TextField
@@ -59,7 +72,7 @@ const Registration = () => {
                 autoComplete="current-password"
                 required
                 name="password"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               />
               <TextField
                 sx={{ width: "75%", m: 1 }}
@@ -70,18 +83,19 @@ const Registration = () => {
                 autoComplete="current-password"
                 required
                 name="password2"
-                onChange={handleOnChange}
+                onBlur={handleOnBlur}
               />
-              <NavLink style={{ textDecoration: "none" }} to="/login">
-                <Button variant="text">Already Have an account? Login</Button>
-              </NavLink>
+
               <Button
-                sx={{ width: "75%", mt: 4 }}
+                sx={{ width: "75%", mt: 2 }}
                 variant="contained"
                 type="submit"
               >
                 Create Account
               </Button>
+              <NavLink style={{ textDecoration: "none" }} to="/login">
+                <Button variant="text">Already Have an account? Login</Button>
+              </NavLink>
             </form>
           )}
           {loading && <CircularProgress color="secondary" />}
