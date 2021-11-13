@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
@@ -19,7 +19,14 @@ const style = {
 };
 const BookingModal = ({ openbooking, closeModal, booking, date }) => {
   const { name, time } = booking;
+
   const { user } = useAuth();
+  const initialInfo = {
+    patientName: user.displayName,
+    patientPhone: "",
+    patientEmail: user.email,
+  };
+  const [bookingInfo, setBookingInfo] = useState(initialInfo);
   const handleBookSubmit = (e) => {
     e.preventDefault();
     // collect data
@@ -27,6 +34,15 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
     // send data to server
     closeModal();
     alert("Booking Successful");
+  };
+
+  const handleOnBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newInfo = { ...bookingInfo };
+    newInfo[field] = value;
+    setBookingInfo(newInfo);
+    e.preventDefault();
   };
   return (
     <Modal
@@ -50,6 +66,8 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
           <TextField
             sx={{ width: "90%", m: 1 }}
             id="outlined-size-small"
+            name="patientName"
+            onBlur={handleOnBlur}
             defaultValue={user.displayName}
             size="small"
             type="text"
@@ -59,6 +77,8 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
             sx={{ width: "90%", m: 1 }}
             id="outlined-size-small"
             placeholder="Phone Number"
+            name="patientPhone"
+            onBlur={handleOnBlur}
             size="small"
             type="number"
             required
@@ -66,8 +86,10 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
           <TextField
             sx={{ width: "90%", m: 1 }}
             id="outlined-size-small"
+            name="patientEmail"
             defaultValue={user.email}
             size="small"
+            onBlur={handleOnBlur}
             type="email"
             required
           />
