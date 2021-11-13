@@ -6,6 +6,8 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 initializeAuthentication();
 const useFirebase = () => {
@@ -13,14 +15,31 @@ const useFirebase = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const auth = getAuth();
-
-  //  login user
-
+  const googleProvider = new GoogleAuthProvider();
+  //  login user with email and password
   const signinUser = (email, password, location, history) => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const detination = location?.state?.from || "/";
         history.push(detination);
+        setError("");
+      })
+      .catch((err) => {
+        setError(err.message);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  //google sign in
+
+  const googleSignin = (location, history) => {
+    setLoading(true);
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const detination = location?.state?.from || "/";
+        history.push(detination);
+        const user = result.user;
         setError("");
       })
       .catch((err) => {
@@ -34,7 +53,6 @@ const useFirebase = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         const user = result.user;
-
         setError("");
       })
       .catch((err) => {
@@ -70,6 +88,7 @@ const useFirebase = () => {
     signinUser,
     logout,
     registerUser,
+    googleSignin,
   };
 };
 
