@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import {  Button } from "@mui/material";
 import { useAuth } from "../../../hooks/useAuth";
 const style = {
   position: "absolute",
@@ -17,7 +17,13 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const BookingModal = ({ openbooking, closeModal, booking, date }) => {
+const BookingModal = ({
+  openbooking,
+  closeModal,
+  booking,
+  date,
+  setAppointmentsSuccess,
+}) => {
   const { name, time } = booking;
 
   const { user } = useAuth();
@@ -47,9 +53,11 @@ const BookingModal = ({ openbooking, closeModal, booking, date }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data.insertedId) {
+          setAppointmentsSuccess(true);
+          closeModal();
+        }
       });
-    closeModal();
   };
 
   const handleOnBlur = (e) => {

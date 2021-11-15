@@ -7,6 +7,8 @@ import Login from "./Pages/LoginPage/Login/Login";
 import Registration from "./Pages/LoginPage/Registration/Registration";
 import AuthProvider from "./contexts/AuthProvider/AuthProvider";
 import PrivateRoute from "./Pages/LoginPage/PrivateRoute/PrivateRoute";
+import Dashboard from "./Pages/DashboardPage/Dashboard/Dashboard";
+
 function App() {
   return (
     <div className="App">
@@ -28,6 +30,9 @@ function App() {
             {/* appointments routes here */}
             <PrivateRoute path="/appointment">
               <Appointment />
+            </PrivateRoute>
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
             </PrivateRoute>
             <Route exact path="/login">
               <Login />

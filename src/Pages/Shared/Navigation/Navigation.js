@@ -42,9 +42,19 @@ const Navigation = () => {
             <Button color="inherit">Appointment</Button>
           </NavLink>
           {user.email ? (
-            <Button variant="contained" onClick={logout} color="error">
-              Logout
-            </Button>
+            <Box>
+              <NavLink
+                style={{ textDecoration: "none", color: "white", margin: 9 }}
+                to="/dashboard"
+              >
+                <Button variant="contained" color="success">
+                  Dashboard
+                </Button>
+              </NavLink>
+              <Button variant="contained" onClick={logout} color="error">
+                Logout
+              </Button>
+            </Box>
           ) : (
             <NavLink
               style={{ textDecoration: "none", color: "red" }}
