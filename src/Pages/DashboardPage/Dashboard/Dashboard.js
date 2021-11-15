@@ -15,17 +15,17 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
-import Calender from "../../Shared/Calender/Calender";
-import Appoinments from "../Appoinments/Appoinments";
-
+import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { Button, Divider } from "@mui/material";
+import DashboardHome from "./DashboardHome/DashboardHome";
+import MakeAdmin from "../MakeAdmin/MakeAdmin";
+import MakeDoctor from "../MakeDoctor/MakeDoctor";
 const drawerWidth = 220;
 
 const Dashboard = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
-
+  let { path, url } = useRouteMatch();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -33,7 +33,19 @@ const Dashboard = (props) => {
   const drawer = (
     <div>
       <Toolbar />
-
+      <Divider />
+      <Link to="/appointment">
+        <Button variant="inherit">Appointment</Button>
+      </Link>
+      <Link to={`${url}`}>
+        <Button variant="inherit">Dashboard</Button>
+      </Link>
+      <Link to={`${url}/makeadmin`}>
+        <Button variant="inherit">Make Admin</Button>
+      </Link>
+      <Link to={`${url}/makedoctor`}>
+        <Button variant="inherit">Make Doctor</Button>
+      </Link>
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -121,16 +133,17 @@ const Dashboard = (props) => {
         }}
       >
         <Toolbar />
-        <Typography paragraph>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={5}>
-              <Calender date={date} setDate={setDate} />
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <Appoinments date={date} />
-            </Grid>
-          </Grid>
-        </Typography>
+        <Switch>
+          <Route exact path={path}>
+            <DashboardHome />
+          </Route>
+          <Route path={`${path}/makeadmin`}>
+            <MakeAdmin />
+          </Route>
+          <Route path={`${path}/makedoctor`}>
+            <MakeDoctor />
+          </Route>
+        </Switch>
       </Box>
     </Box>
   );

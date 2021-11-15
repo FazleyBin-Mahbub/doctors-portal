@@ -50,6 +50,7 @@ const useFirebase = () => {
         const detination = location?.state?.from || "/";
         history.push(detination);
         const user = result.user;
+        saveUser(user.email, user.displayName, "PUT");
         setError("");
       })
       .catch((err) => {
@@ -67,7 +68,8 @@ const useFirebase = () => {
 
         const newUser = { email, displayName: name };
         setUser(newUser);
-
+        // save user to database
+        saveUser(email, name, "POST");
         updateProfile(auth.currentUser, {
           displayName: name,
         })
@@ -81,6 +83,17 @@ const useFirebase = () => {
       .finally(() => setLoading(false));
   };
 
+  // save user
+  const saveUser = (email, displayName, method) => {
+    const user = { email, displayName };
+    fetch("http://localhost:5000/users", {
+      method: method,
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    }).then();
+  };
   // observere user
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (user) => {
