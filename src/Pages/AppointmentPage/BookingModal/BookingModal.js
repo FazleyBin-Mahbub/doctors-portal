@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import {  Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useAuth } from "../../../hooks/useAuth";
 const style = {
   position: "absolute",
@@ -65,7 +65,6 @@ const BookingModal = ({
     const value = e.target.value;
     const newInfo = { ...bookingInfo };
     newInfo[field] = value;
-    console.log(newInfo);
     setBookingInfo(newInfo);
     e.preventDefault();
   };
