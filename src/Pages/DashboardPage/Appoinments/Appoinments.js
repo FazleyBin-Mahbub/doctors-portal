@@ -9,12 +9,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 const Appoinments = ({ date }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [appoinments, setAppoinments] = useState([]);
 
   useEffect(() => {
     const url = `http://localhost:5000/appointments?patientEmail=${user.email}&date=${date}`;
-    fetch(url)
+    fetch(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setAppoinments(data));
   }, [date]);
