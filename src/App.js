@@ -8,6 +8,7 @@ import Registration from "./Pages/LoginPage/Registration/Registration";
 import AuthProvider from "./contexts/AuthProvider/AuthProvider";
 import PrivateRoute from "./Pages/LoginPage/PrivateRoute/PrivateRoute";
 import Dashboard from "./Pages/DashboardPage/Dashboard/Dashboard";
+import AdminAlert from "./Pages/LoginPage/AdminRoute/AdminAlert";
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
             <Route exact path="/registration">
               <Registration />
             </Route>
+            <Route exact path="/adminalert">
+              <AdminAlert />
+            </Route>
+            
           </Switch>
         </Router>
       </AuthProvider>

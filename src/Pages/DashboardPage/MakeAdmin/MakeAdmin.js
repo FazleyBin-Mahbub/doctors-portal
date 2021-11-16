@@ -1,13 +1,16 @@
 import React from "react";
 import { Button, TextField } from "@mui/material";
+import { useAuth } from "../../../hooks/useAuth";
 const MakeAdmin = () => {
   const [email, setEmail] = React.useState("");
+  const { token } = useAuth();
   const handleAdminSubmit = (e) => {
     const user = { email };
 
     fetch("http://localhost:5000/users/makeadmin", {
       method: "PUT",
       headers: {
+        "authorization": `Bearer ${token}`,
         "content-type": "application/json",
       },
       body: JSON.stringify(user),
